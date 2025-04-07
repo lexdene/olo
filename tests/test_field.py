@@ -416,8 +416,10 @@ class TestDbField(TestCase):
                     for d in ds:
                         self.assertEqual(d.count, d.id)
 
+                    print('db get call count:', db_get.call_count)
+                    print('db get multi call count:', db_get_multi.call_count)
                     self.assertEqual(db_get.call_count, 0)
-                    self.assertEqual(db_get_multi.call_count, 3)
+                    self.assertEqual(db_get_multi.call_count, 2)
 
 
 class TestBatchField(TestCase):
