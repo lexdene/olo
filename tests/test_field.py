@@ -407,19 +407,20 @@ class TestDbField(TestCase):
             [3, 2, 1],
             [2, 3, 1],
         ]:
-            with patched_db_get as db_get:
-                with patched_db_get_multi as db_get_multi:
-                    print('ids:', ids)
-                    ds = Dummy.get_multi(ids)
-                    print('entities ids:', [d.id for d in ds[0]._olo_qs.entities])
+            with self.subTest(ids=ids):
+                with patched_db_get as db_get:
+                    with patched_db_get_multi as db_get_multi:
+                        print('ids:', ids)
+                        ds = Dummy.get_multi(ids)
+                        print('entities ids:', [d.id for d in ds[0]._olo_qs.entities])
 
-                    for d in ds:
-                        self.assertEqual(d.count, d.id)
+                        for d in ds:
+                            self.assertEqual(d.count, d.id)
 
-                    print('db get call count:', db_get.call_count)
-                    print('db get multi call count:', db_get_multi.call_count)
-                    self.assertEqual(db_get.call_count, 0)
-                    self.assertEqual(db_get_multi.call_count, 2)
+                        print('db get call count:', db_get.call_count)
+                        print('db get multi call count:', db_get_multi.call_count)
+                        self.assertEqual(db_get.call_count, 0)
+                        self.assertEqual(db_get_multi.call_count, 2)
 
 
 class TestBatchField(TestCase):
